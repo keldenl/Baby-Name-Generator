@@ -1,0 +1,28 @@
+<html>
+<head>
+
+  <script type="text/javascript" src="index.js"></script>
+  <script>
+    window.onload = () => {
+      const mainContainer = document.getElementById('main')
+      
+      // create list
+      // let sampleList = ['test', 'a']
+      let sampleList = createList()
+      sampleList.forEach(name => {
+        const newName = document.createElement('li')
+        newName.innerHTML = name
+        mainContainer.append(newName)
+      })
+
+    } 
+  </script>
+
+</head>
+<body>
+
+  <h1>Baby Name Generator</h1>
+  <div id="main">
+  </div>
+</body>
+</html>
