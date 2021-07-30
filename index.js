@@ -1,7 +1,7 @@
 const testList = ['eliza', 'kevin', 'kelden', 'tiajha']
 
 //let nameRaw = fs.readFileSync(path.resolve(__dirname, 'db.txt'), 'utf8')
-let nameRaw = fetch('db.txt').text()
+let nameRaw = fetch('db.txt').then(res => res.text())
 let nameList = nameRaw.split("\n")
 
 String.prototype.toProperCase = function () {
