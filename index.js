@@ -1,8 +1,8 @@
 const testList = ['eliza', 'kevin', 'kelden', 'tiajha']
 
 //let nameRaw = fs.readFileSync(path.resolve(__dirname, 'db.txt'), 'utf8')
-let nameRaw = fetch('db.txt').then(res => res.text())
-let nameList = nameRaw.split("\n")
+let nameRaw = async () => await fetch('db.txt').then(res => res.text()).then(a => alert(a))
+let nameList = nameRaw().split("\n")
 
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
