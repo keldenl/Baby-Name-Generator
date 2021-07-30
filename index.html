@@ -9,11 +9,12 @@
       // create list
       // let sampleList = ['test', 'a']
       let sampleList = createList()
-      sampleList.forEach(name => {
+      console.log(sampleList)
+      for(let name of sampleList) {
         const newName = document.createElement('li')
         newName.innerHTML = name
         mainContainer.append(newName)
-      })
+      }
     } 
   </script>
 

@@ -1,7 +1,9 @@
 const testList = ['eliza', 'kevin', 'kelden', 'tiajha']
 
-//let nameRaw = fs.readFileSync(path.resolve(__dirname, 'db.txt'), 'utf8')
-let nameList = async () => await fetch('db.txt').then(res => res.text()).then(names => names.split('\n')).then(n => console.log(n))
+function(() {
+  'use strict'
+  
+  let nameList = async () => await fetch('db.txt').then(res => res.text()).then(names => names.split('\n')).then(n => console.log(n))
 //let nameList = nameRaw().split("\n")
 
 String.prototype.toProperCase = function () {
@@ -58,3 +60,5 @@ const main = (max = 25) => {
 //  console.log(`Press CMD+R twice to generate ${max} more...`)
   
 }
+})
+//let nameRaw = fs.readFileSync(path.resolve(__dirname, 'db.txt'), 'utf8')
