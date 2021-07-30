@@ -1,8 +1,8 @@
 const testList = ['eliza', 'kevin', 'kelden', 'tiajha']
 
 //let nameRaw = fs.readFileSync(path.resolve(__dirname, 'db.txt'), 'utf8')
-let nameRaw = async () => await fetch('db.txt').then(res => res.text()).then(a => alert(a))
-let nameList = nameRaw().split("\n")
+let nameList = async () => await fetch('db.txt').then(res => res.text()).then(names => names.split('\n')).then(n => console.log(n))
+//let nameList = nameRaw().split("\n")
 
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -15,7 +15,7 @@ const randNum = (min, max) => (Math.floor(Math.random() * (max-min)) + min)
 const getRandSub = () => randNum(2, 4)
 
 // random word from list
-const getRandWord = () => nameList[randNum(0, nameList.length)]
+const getRandWord = () => nameList()[randNum(0, nameList().length)]
 
 const getRandPart = (startIdx) => {
   const word = getRandWord()
