@@ -1,8 +1,16 @@
+@font-face {
+  font-family: 'njnaruto';
+  src: local('njnaruto'), url(./njnaruto.ttf) format('truetype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
 :root {
   --narutoBlue: #022d6c;
 }
 
 body {
+  font-family: 'njnaruto';
   background-color: white;
   color: var(--narutoBlue);
   background-image: url(https://cdn.staticneo.com/w/naruto/Nprofile2.jpg);
@@ -34,7 +42,7 @@ button {
 
 .buttonText {
   padding: 0 50px;
-  vertical-align: super;
+  font-size: 25px;
 }
 
 .headbandCircles {
@@ -47,18 +55,20 @@ h1 {
 }
 
 ul {
-  width: 60%;
+  width: 80%;
   margin: auto;
   margin-top: 50px;
   list-style: decimal;
   text-align: left;
-  height: 300px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
 }
 
 li {
-  font-size: 15px;
+  font-size: 25px;
 }

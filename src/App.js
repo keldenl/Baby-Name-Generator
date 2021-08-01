@@ -8,7 +8,7 @@ function App() {
   const playDattebayo = () => dattebayo.play()
 
   const getNameList = () => {
-    setNameList(createList(32))
+    setNameList(createList(26))
     playDattebayo()
   }
 
