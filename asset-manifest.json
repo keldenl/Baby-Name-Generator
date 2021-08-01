@@ -1,20 +1,21 @@
 {
   "files": {
-    "main.css": "/Baby-Name-Generator/static/css/main.edbc697e.chunk.css",
-    "main.js": "/Baby-Name-Generator/static/js/main.b19427c7.chunk.js",
-    "main.js.map": "/Baby-Name-Generator/static/js/main.b19427c7.chunk.js.map",
+    "main.css": "/Baby-Name-Generator/static/css/main.30cb4c5e.chunk.css",
+    "main.js": "/Baby-Name-Generator/static/js/main.c0b95ff7.chunk.js",
+    "main.js.map": "/Baby-Name-Generator/static/js/main.c0b95ff7.chunk.js.map",
     "runtime-main.js": "/Baby-Name-Generator/static/js/runtime-main.85915915.js",
     "runtime-main.js.map": "/Baby-Name-Generator/static/js/runtime-main.85915915.js.map",
     "static/js/2.b146561b.chunk.js": "/Baby-Name-Generator/static/js/2.b146561b.chunk.js",
     "static/js/2.b146561b.chunk.js.map": "/Baby-Name-Generator/static/js/2.b146561b.chunk.js.map",
     "index.html": "/Baby-Name-Generator/index.html",
-    "static/css/main.edbc697e.chunk.css.map": "/Baby-Name-Generator/static/css/main.edbc697e.chunk.css.map",
-    "static/js/2.b146561b.chunk.js.LICENSE.txt": "/Baby-Name-Generator/static/js/2.b146561b.chunk.js.LICENSE.txt"
+    "static/css/main.30cb4c5e.chunk.css.map": "/Baby-Name-Generator/static/css/main.30cb4c5e.chunk.css.map",
+    "static/js/2.b146561b.chunk.js.LICENSE.txt": "/Baby-Name-Generator/static/js/2.b146561b.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/Baby-Name-Generator/static/media/njnaruto.af931b58.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.85915915.js",
     "static/js/2.b146561b.chunk.js",
-    "static/css/main.edbc697e.chunk.css",
-    "static/js/main.b19427c7.chunk.js"
+    "static/css/main.30cb4c5e.chunk.css",
+    "static/js/main.c0b95ff7.chunk.js"
   ]
 }
