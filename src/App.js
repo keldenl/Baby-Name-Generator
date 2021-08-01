@@ -4,7 +4,7 @@ import { createList } from './util'
 
 function App() {
   let [nameList, setNameList] = useState([])
-  let dattebayo = new Audio('/dattebayo.mp3')
+  let dattebayo = new Audio('/Baby-Name-Generator/dattebayo.mp3')
   const playDattebayo = () => dattebayo.play()
 
   const getNameList = () => {
