@@ -1,4 +1,4 @@
-Aaron
+export const db = `Aaron
 Abbey
 Abbie
 Abby
@@ -5160,4 +5160,6 @@ Zora
 Zoraida
 Zula
 Zulema
-Zulma
+Zulma`
+
+export default db

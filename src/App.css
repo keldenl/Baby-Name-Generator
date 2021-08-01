@@ -1,0 +1,64 @@
+:root {
+  --narutoBlue: #022d6c;
+}
+
+body {
+  background-color: white;
+  color: var(--narutoBlue);
+  background-image: url(https://cdn.staticneo.com/w/naruto/Nprofile2.jpg);
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+.App {
+  margin: auto;
+  text-align: center;
+}
+
+.banner {
+  padding: 15px 0;
+  background-color: var(--narutoBlue);
+}
+
+button {
+  background-color: #c0c4bc;
+  color: #41423d;
+  border: 3px solid var(--narutoBlue);
+  border-radius: 10px;
+  padding: 15px;
+  font: inherit;
+  outline: inherit;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.buttonText {
+  padding: 0 50px;
+  vertical-align: super;
+}
+
+.headbandCircles {
+  font-size: 30px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 50px;
+}
+
+ul {
+  width: 60%;
+  margin: auto;
+  margin-top: 50px;
+  list-style: decimal;
+  text-align: left;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+li {
+  font-size: 15px;
+}
