@@ -23,11 +23,11 @@ function App() {
         </button>
       </header>
       <div className="content-wrapper">
-        <div className="name-list-container">
+        {nameList.length ? <div className="name-list-container">
           {nameList.map((name, i) => (
             <div className="name-container">{`${i + 1}. ${name}`}</div>
           ))}
-        </div>
+        </div> : undefined}
       </div>
     </div>
   )
