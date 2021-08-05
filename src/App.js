@@ -4,11 +4,12 @@ import { createList } from './util'
 
 function App() {
   let [nameList, setNameList] = useState([])
+  let [numOfNames, setNumOfNames] = useState(50)
   let dattebayo = new Audio('dattebayo.mp3')
   const playDattebayo = () => dattebayo.play()
 
   const getNameList = () => {
-    setNameList(createList(50))
+    setNameList(createList(numOfNames))
     playDattebayo()
   }
 
@@ -16,6 +17,11 @@ function App() {
     <div className="App">
       <header className="header">
         <h1>Baby Name Generator</h1>
+        <div className="name-counter">
+          <div className="counter-text">{`${numOfNames} names`}</div>
+          <div className="counter-button" onClick={() => numOfNames - 10 >= 0 && setNumOfNames(numOfNames - 10)}>-10</div>
+          <div className="counter-button" onClick={() => setNumOfNames(numOfNames + 10)}>+10</div>
+        </div>
         <button onClick={getNameList}>
           <span className="headbandCircles">&#10247;</span>
           <span className="buttonText">Generate</span>
