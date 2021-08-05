@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'njnaruto';
-  src: local('njnaruto'), url(./njnaruto.ttf) format('truetype');
+  font-family: "njnaruto";
+  src: local("njnaruto"), url(./njnaruto.ttf) format("truetype");
   /* other formats include: 'woff2', 'truetype, 'opentype',
                             'embedded-opentype', and 'svg' */
 }
@@ -10,7 +10,7 @@
 }
 
 body {
-  font-family: 'njnaruto';
+  font-family: "njnaruto";
   background-color: white;
   color: var(--narutoBlue);
   background-image: url(https://cdn.staticneo.com/w/naruto/Nprofile2.jpg);
@@ -23,9 +23,12 @@ body {
   text-align: center;
 }
 
-.banner {
-  padding: 15px 0;
+.header {
+  padding: 15px 30px;
   background-color: var(--narutoBlue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 button {
@@ -33,7 +36,7 @@ button {
   color: #41423d;
   border: 3px solid var(--narutoBlue);
   border-radius: 10px;
-  padding: 15px;
+  padding: 10px;
   font: inherit;
   outline: inherit;
   cursor: pointer;
@@ -41,7 +44,7 @@ button {
 }
 
 .buttonText {
-  padding: 0 50px;
+  padding: 0 25px;
   font-size: 25px;
 }
 
@@ -50,25 +53,26 @@ button {
 }
 
 h1 {
-  text-align: center;
-  font-size: 50px;
+  color: white;
+  font-size: 40px;
+  margin: 0;
 }
 
-ul {
-  width: 80%;
+.name-list-container {
+  width: calc(100% - 120px);
   margin: auto;
-  margin-top: 50px;
-  list-style: decimal;
-  text-align: left;
-  height: 400px;
+  margin-top: 15px;
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 15px;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
-
-li {
-  font-size: 25px;
+.name-container {
+  padding: 10px;
+  margin: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }

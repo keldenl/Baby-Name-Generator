@@ -8,27 +8,27 @@ function App() {
   const playDattebayo = () => dattebayo.play()
 
   const getNameList = () => {
-    setNameList(createList(26))
+    setNameList(createList(50))
     playDattebayo()
   }
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="header">
         <h1>Baby Name Generator</h1>
-        <div className="banner">
-          <button onClick={getNameList}>
-            <span className="headbandCircles">&#10247;</span>
-            <span className="buttonText">Generate</span>
-            <span className="headbandCircles">&#10247;</span>
-          </button>
-        </div>
-        <ul>
-          {nameList.map((name) => (
-            <li>{name}</li>
-          ))}
-        </ul>
+        <button onClick={getNameList}>
+          <span className="headbandCircles">&#10247;</span>
+          <span className="buttonText">Generate</span>
+          <span className="headbandCircles">&#10247;</span>
+        </button>
       </header>
+      <div className="content-wrapper">
+        <div className="name-list-container">
+          {nameList.map((name, i) => (
+            <div className="name-container">{`${i + 1}. ${name}`}</div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
