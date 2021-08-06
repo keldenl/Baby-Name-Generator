@@ -39,10 +39,10 @@ const hasMatchesMultiple = (str, arrRegex) => {
   return false
 }
 
-const createName = () => {
+const createName = (length = 6) => {
   let output = ''
 
-  while (output.length < 6) {
+  while (output.length < length) {
     let name = getRandPart(output.length)
     let possibleName = output + name
 
@@ -55,8 +55,7 @@ const createName = () => {
     output = possibleName
   }
 
-
-  return toProperCase(output)
+  return toProperCase(output.substring(0, length))
 }
 
 export const createList = (max = 25) => {

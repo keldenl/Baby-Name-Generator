@@ -97,6 +97,12 @@ h1 {
 .name-container {
   padding: 10px;
   margin: 5px;
+  cursor: pointer;
+  border-radius: 25px;
+  transition: 0.1s ease-in-out;
+}
+.name-container:hover {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 @media screen and (min-width: 720px) {
