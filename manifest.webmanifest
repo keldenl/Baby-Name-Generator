@@ -2,8 +2,7 @@
   "theme_color": "$f69435",
   "background_color": "#fff",
   "display": "fullscreen",
-  "scope": "/Baby-Name-Generator/",
-  "start_url": "/Baby-Name-Generator/",
+  "start_url": "./Baby-Name-Generator/",
   "name": "Baby Name Generator",
   "short_name": "BNameGen",
   "icons": [
