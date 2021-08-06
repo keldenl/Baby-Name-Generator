@@ -27,12 +27,32 @@ const getRandPart = (startIdx) => {
   return word.substring(randStart, sub + randStart)
 }
 
+// Regexes
+const threeConsecutiveRegex = /(?=(.)\1{2})(\1+)/gm
+const threeConsecutiveConsonants = /([^aeiou]{3})/i
+
+// Takes in a string and multiple regexes, return true if there are matches, false otherwise
+const hasMatchesMultiple = (str, arrRegex) => {
+  for (let reg of arrRegex) {
+    if (str.match(reg) != null) return true
+  }
+  return false
+}
+
 const createName = () => {
   let output = ''
 
   while (output.length < 6) {
-    const name = getRandPart(output.length)
-    output += name
+    let name = getRandPart(output.length)
+    let possibleName = output + name
+
+    // If there are 3 consecutive IDENTICAL or CONSONANTS characters...
+    // try again until there isn't
+    while (hasMatchesMultiple(possibleName, [threeConsecutiveRegex, threeConsecutiveConsonants])) {
+      name = getRandPart(output.length)
+      possibleName = output + name
+    }
+    output = possibleName
   }
 
 
