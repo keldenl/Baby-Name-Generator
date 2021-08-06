@@ -10,7 +10,7 @@
 body {
   background-color: white;
   color: var(--narutoBlue);
-  background-image: url(https://cdn.staticneo.com/w/naruto/Nprofile2.jpg);
+  background-image: url("img/bg.png");
   background-repeat: no-repeat;
   background-position: right bottom;
   background-attachment: fixed;

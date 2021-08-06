@@ -64,10 +64,10 @@ function App() {
         </button>
       </header>
       <div className="content-wrapper">
-        <div className="counter-button" onClick={resetClipboard}>RESET CLIPBOARD</div>
+        <div className="counter-button" onPointerDown={resetClipboard}>RESET CLIPBOARD</div>
         {nameList.length ? <div className="name-list-container">
           {nameList.map((name, i) => (
-            <div className="name-container" onClick={() => copyToClipBoard(name)}>{`${i + 1}. ${name}`}</div>
+            <div className="name-container" onPointerDown={() => copyToClipBoard(name)}>{`${i + 1}. ${name}`}</div>
           ))}
         </div> : undefined}
       </div>
