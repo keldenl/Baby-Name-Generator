@@ -12,7 +12,8 @@ function App() {
   let [nameList, setNameList] = useState([])
   let [numOfNames, setNumOfNames] = useState(50)
 
-  const [copyText, setCopyText] = useState('');
+  const [showClipboard, setShowClipboard] = useState(false)
+  const [copyText, setCopyText] = useState('')
 
   const getNameList = () => {
     setNameList(createList(numOfNames))
@@ -24,31 +25,33 @@ function App() {
     autoClose: 1750,
   }
 
-  const copyToClipBoard = name => {
+  const copyToClipBoard = async (name) => {
     const newCopyText = copyText.length ? `${copyText}, ${name}` : name
     setCopyText(newCopyText)
+    try {
+      await navigator.clipboard.writeText(newCopyText);
+      toast.success(`Copied ${newCopyText}!`, toastConfig)
+    } catch (err) {
+      toast.error('Failed to copy name!', toastConfig)
+    }
   }
 
   const resetClipboard = () => {
     setCopyText('')
-    toast.success(`Successfully reset clipboard!`, toastConfig)
+    toast.info(`Successfully reset clipboard!`, toastConfig)
   }
-
-  useEffect(() => {
-    async function saveToClipboard() {
-      try {
-        await navigator.clipboard.writeText(copyText);
-        toast.success(`Copied ${copyText}!`, toastConfig)
-      } catch (err) {
-        toast.error('Failed to copy name!', toastConfig)
-      }
-    }
-    copyText.length && saveToClipboard()
-  }, [copyText])
 
   return (
     <div className="App">
       <ToastContainer />
+      <div className="clipboard" onClick={() => setShowClipboard(!showClipboard)}>
+        <img alt='clipboard' src='https://i.pinimg.com/originals/82/30/7b/82307bf80edf1f01c739302c34e9d743.png' />
+        <p>Clipboard</p>
+      </div>
+      <div className={`clipboard-modal ${showClipboard && 'show-modal'}`}>
+        <h2>Clipboard</h2>
+        <textarea value={copyText}></textarea>
+      </div>
       <header className="header">
         <h1>Baby Name Generator</h1>
         <div className="name-counter">
