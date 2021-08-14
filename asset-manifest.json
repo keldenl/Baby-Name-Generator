@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Baby-Name-Generator/static/css/main.adefee0b.chunk.css",
-    "main.js": "/Baby-Name-Generator/static/js/main.8e30ea6a.chunk.js",
-    "main.js.map": "/Baby-Name-Generator/static/js/main.8e30ea6a.chunk.js.map",
+    "main.js": "/Baby-Name-Generator/static/js/main.c963c662.chunk.js",
+    "main.js.map": "/Baby-Name-Generator/static/js/main.c963c662.chunk.js.map",
     "runtime-main.js": "/Baby-Name-Generator/static/js/runtime-main.85915915.js",
     "runtime-main.js.map": "/Baby-Name-Generator/static/js/runtime-main.85915915.js.map",
     "static/css/2.c55f41dc.chunk.css": "/Baby-Name-Generator/static/css/2.c55f41dc.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.c55f41dc.chunk.css",
     "static/js/2.06697e8a.chunk.js",
     "static/css/main.adefee0b.chunk.css",
-    "static/js/main.8e30ea6a.chunk.js"
+    "static/js/main.c963c662.chunk.js"
   ]
 }
