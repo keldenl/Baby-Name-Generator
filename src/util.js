@@ -58,10 +58,10 @@ const createName = (length) => {
   return toProperCase(output.substring(0, length))
 }
 
-export const createList = (max = 25, maxLength = 6) => {
+export const createList = (max = 25, length = 6) => {
   let outputList = []
   for (let i = 0; i < max; i++) {
-    outputList.push(createName(maxLength))
+    outputList.push(createName(length))
   }
   return outputList
 }
