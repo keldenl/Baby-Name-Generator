@@ -32,7 +32,7 @@ function App() {
       await navigator.clipboard.writeText(newCopyText);
       toast.success(`Copied ${newCopyText}!`, toastConfig)
     } catch (err) {
-      toast.error('Failed to copy name!', toastConfig)
+      toast.error(`Clipboard updated to "${newCopyText}"!`, toastConfig)
     }
   }
 
@@ -48,9 +48,17 @@ function App() {
         <img alt='clipboard' src='https://i.pinimg.com/originals/82/30/7b/82307bf80edf1f01c739302c34e9d743.png' />
         <p>Clipboard</p>
       </div>
-      <div className={`clipboard-modal ${showClipboard && 'show-modal'}`}>
-        <h2>Clipboard</h2>
-        <textarea value={copyText}></textarea>
+      <div className={`clipboard-container ${showClipboard && 'show-container'}`} >
+        <div className='dark-overlay' onClick={() => setShowClipboard(!showClipboard)}></div>
+        <div className='clipboard-modal'>
+          <span className='modal-header'>
+            <h2>Clipboard
+              <div className="counter-button reset-clipboard" onPointerDown={resetClipboard}>RESET CLIPBOARD</div>
+            </h2>
+            <span className="close" onClick={() => setShowClipboard(!showClipboard)}>+</span>
+          </span>
+          <textarea value={copyText} readonly></textarea>
+        </div>
       </div>
       <header className="header">
         <h1>Baby Name Generator</h1>
@@ -67,14 +75,13 @@ function App() {
         </button>
       </header>
       <div className="content-wrapper">
-        <div className="counter-button" onPointerDown={resetClipboard}>RESET CLIPBOARD</div>
         {nameList.length ? <div className="name-list-container">
           {nameList.map((name, i) => (
             <div className="name-container" onPointerDown={() => copyToClipBoard(name)}>{`${i + 1}. ${name}`}</div>
           ))}
         </div> : undefined}
       </div>
-    </div>
+    </div >
   )
 }
 
