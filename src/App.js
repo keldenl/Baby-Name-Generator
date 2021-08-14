@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,12 +11,13 @@ function App() {
 
   let [nameList, setNameList] = useState([])
   let [numOfNames, setNumOfNames] = useState(50)
+  let [maxLength, setMaxLength] = useState(7)
 
   const [showClipboard, setShowClipboard] = useState(false)
   const [copyText, setCopyText] = useState('')
 
   const getNameList = () => {
-    setNameList(createList(numOfNames))
+    setNameList(createList(numOfNames, maxLength))
     playDattebayo()
   }
 
@@ -66,6 +67,11 @@ function App() {
           <div className="counter-text">{`${numOfNames} names`}</div>
           <div className="counter-button" onClick={() => numOfNames - 10 >= 0 && setNumOfNames(numOfNames - 10)}>-10</div>
           <div className="counter-button" onClick={() => setNumOfNames(numOfNames + 10)}>+10</div>
+        </div>
+        <div className="name-counter">
+          <div className="counter-text">{`${maxLength} max length`}</div>
+          <div className="counter-button" onClick={() => maxLength - 1 >= 3 && setMaxLength(maxLength - 1)}>-1</div>
+          <div className="counter-button" onClick={() => setMaxLength(maxLength + 1)}>+1</div>
         </div>
 
         <button onClick={getNameList}>

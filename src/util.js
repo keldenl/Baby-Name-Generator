@@ -39,7 +39,7 @@ const hasMatchesMultiple = (str, arrRegex) => {
   return false
 }
 
-const createName = (length = 6) => {
+const createName = (length) => {
   let output = ''
 
   while (output.length < length) {
@@ -58,10 +58,10 @@ const createName = (length = 6) => {
   return toProperCase(output.substring(0, length))
 }
 
-export const createList = (max = 25) => {
+export const createList = (max = 25, maxLength = 6) => {
   let outputList = []
   for (let i = 0; i < max; i++) {
-    outputList.push(createName())
+    outputList.push(createName(maxLength))
   }
   return outputList
 }
