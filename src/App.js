@@ -33,7 +33,7 @@ function App() {
       await navigator.clipboard.writeText(newCopyText);
       toast.success(`Copied ${newCopyText}!`, toastConfig)
     } catch (err) {
-      toast.error(`Clipboard updated to "${newCopyText}"!`, toastConfig)
+      toast.success(`Clipboard updated to "${newCopyText}"!`, toastConfig)
     }
   }
 
