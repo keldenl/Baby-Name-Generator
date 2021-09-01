@@ -1,6 +1,6 @@
-import db from './db'
+import { defaultDb } from './db/defaultDb'
 
-const nameList = db.split('\n')
+const defaultNameList = defaultDb.split('\n')
 
 const toProperCase = (str) => {
   return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
@@ -14,17 +14,19 @@ const getRandSub = () => randNum(2, 4)
 
 
 // random word from list
-const getRandWord = () => nameList[randNum(0, nameList.length)]
+const getRandWord = (nameList) => nameList[randNum(0, nameList.length)]
 
-const getRandPart = (startIdx) => {
-  const word = getRandWord()
+const getRandPart = (startIdx, totalLength, nameList) => {
+  const word = getRandWord(nameList)
   const sub = getRandSub()
-  if (startIdx > word.length - sub) {
+  const newPartIdx = Math.floor((startIdx / totalLength) * word.length)
+  if (newPartIdx > word.length - sub) {
     return ''
+
   }
 
-  const randStart = randNum(startIdx, word.length - sub)
-  return word.substring(randStart, sub + randStart)
+  // const randStart = randNum(startIdx, word.length - sub)
+  return word.substring(newPartIdx, sub + newPartIdx)
 }
 
 // Regexes
@@ -39,17 +41,17 @@ const hasMatchesMultiple = (str, arrRegex) => {
   return false
 }
 
-const createName = (length, startsWith) => {
+const createName = (length, startsWith, nameList) => {
   let output = startsWith
 
   while (output.length < length) {
-    let name = getRandPart(output.length)
+    let name = getRandPart(output.length, length, nameList)
     let possibleName = output + name
 
     // If there are 3 consecutive IDENTICAL or CONSONANTS characters...
     // try again until there isn't
     while (hasMatchesMultiple(possibleName, [threeConsecutiveRegex, threeConsecutiveConsonants])) {
-      name = getRandPart(output.length)
+      name = getRandPart(output.length, length, nameList)
       possibleName = output + name
     }
     output = possibleName
@@ -58,10 +60,10 @@ const createName = (length, startsWith) => {
   return toProperCase(output.substring(0, length))
 }
 
-export const createList = (max = 25, length = 6, startWith = '') => {
+export const createList = (max = 25, length = 6, startWith = '', nameList = defaultNameList) => {
   let outputList = []
   for (let i = 0; i < max; i++) {
-    outputList.push(createName(length, startWith))
+    outputList.push(createName(length, startWith, nameList))
   }
   return outputList
 }
