@@ -1,6 +1,9 @@
 import { defaultDb } from './db/defaultDb'
 
 const defaultNameList = defaultDb.split('\n')
+const nameLists = {
+  default: defaultNameList,
+}
 
 const toProperCase = (str) => {
   return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
@@ -16,13 +19,16 @@ const getRandSub = () => randNum(2, 4)
 // random word from list
 const getRandWord = (nameList) => nameList[randNum(0, nameList.length)]
 
-const getRandPart = (startIdx, totalLength, nameList) => {
+const getRandPart = (startIdx, totalLength, nameList, isConcat) => {
   const word = getRandWord(nameList)
+  if (!isConcat) {
+    return word
+  }
+
   const sub = getRandSub()
   const newPartIdx = Math.floor((startIdx / totalLength) * word.length)
   if (newPartIdx > word.length - sub) {
     return ''
-
   }
 
   // const randStart = randNum(startIdx, word.length - sub)
@@ -41,11 +47,11 @@ const hasMatchesMultiple = (str, arrRegex) => {
   return false
 }
 
-const createName = (length, startsWith, nameList) => {
+const createName = (length, startsWith, nameList, isConcat) => {
   let output = startsWith
 
   while (output.length < length) {
-    let name = getRandPart(output.length, length, nameList)
+    let name = getRandPart(output.length, length, nameList, isConcat)
     let possibleName = output + name
 
     // If there are 3 consecutive IDENTICAL or CONSONANTS characters...
@@ -60,10 +66,12 @@ const createName = (length, startsWith, nameList) => {
   return toProperCase(output.substring(0, length))
 }
 
-export const createList = (max = 25, length = 6, startWith = '', nameList = defaultNameList) => {
+export const createList = (max = 25, length = 6, startWith = '', db = defaultDb, isConcat = true) => {
   let outputList = []
+  const nameList = nameLists[db]
+
   for (let i = 0; i < max; i++) {
-    outputList.push(createName(length, startWith, nameList))
+    outputList.push(createName(length, startWith, nameList, isConcat))
   }
   return outputList
 }
