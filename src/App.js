@@ -16,6 +16,7 @@ function App() {
 
   const [musicPlaying, setMusicPlaying] = useState(false)
 
+  const [showSettings, setShowSettings] = useState(false);
   let [nameList, setNameList] = useState([])
   let [numOfNames, setNumOfNames] = useState(50)
   let [length, setLength] = useState(7)
@@ -74,20 +75,29 @@ function App() {
         <div className="counter-button" style={{ float: 'right' }} onClick={() => bgMusicPlaying(!musicPlaying)}>♫ {musicPlaying ? 'ON' : 'OFF'}</div>
 
         <h1>Baby Name Generator</h1>
-        <div className="name-counter">
-          <div className="counter-text">{`${numOfNames} names`}</div>
-          <div className="counter-button" onClick={() => numOfNames - 10 >= 0 && setNumOfNames(numOfNames - 10)}>-10</div>
-          <div className="counter-button" onClick={() => setNumOfNames(numOfNames + 10)}>+10</div>
+        <div>
+          <div className="counter-button" style={{ display: 'inline-block' }} onClick={() => setShowSettings(!showSettings)}>
+            {showSettings ? 'Hide Advanced Options' : 'Show Advanced Options'}
+          </div>
         </div>
-        <div className="name-counter">
-          <div className="counter-text">{`${length} characters`}</div>
-          <div className="counter-button" onClick={() => length - 1 >= 3 && setLength(length - 1)}>-1</div>
-          <div className="counter-button" onClick={() => length + 1 < 11 && setLength(length + 1)}>+1</div>
-        </div>
-        <div className="name-counter">
-          <div className="counter-text">Starts with</div>
-          <input value={startsWith} onChange={(e) => e.target.value.length <= length && setStartsWith(e.target.value)} />
-        </div>
+        {showSettings ?
+          <>
+            <div className="name-counter">
+              <div className="counter-text">{`${numOfNames} names`}</div>
+              <div className="counter-button" onClick={() => numOfNames - 10 >= 0 && setNumOfNames(numOfNames - 10)}>-10</div>
+              <div className="counter-button" onClick={() => setNumOfNames(numOfNames + 10)}>+10</div>
+            </div>
+            <div className="name-counter">
+              <div className="counter-text">{`${length} characters`}</div>
+              <div className="counter-button" onClick={() => length - 1 >= 3 && setLength(length - 1)}>-1</div>
+              <div className="counter-button" onClick={() => length + 1 < 11 && setLength(length + 1)}>+1</div>
+            </div>
+            <div className="name-counter">
+              <div className="counter-text">Starts with</div>
+              <input value={startsWith} onChange={(e) => e.target.value.length <= length && setStartsWith(e.target.value)} />
+            </div>
+          </>
+          : null}
 
         <button onClick={getNameList}>
           <span className="headbandCircles">&#10247;</span>
