@@ -7,17 +7,25 @@ import './App.css'
 
 function App() {
   let dattebayo = new Audio('dattebayo.mp3')
+  const [bgMusic] = useState(new Audio('bg-music.mp3'))
   const playDattebayo = () => dattebayo.play()
+  const bgMusicPlaying = (playing = true) => {
+    setMusicPlaying(playing)
+    playing ? bgMusic.play() : bgMusic.pause()
+  }
+
+  const [musicPlaying, setMusicPlaying] = useState(false)
 
   let [nameList, setNameList] = useState([])
   let [numOfNames, setNumOfNames] = useState(50)
   let [length, setLength] = useState(7)
+  let [startsWith, setStartsWith] = useState('')
 
   const [showClipboard, setShowClipboard] = useState(false)
   const [copyText, setCopyText] = useState('')
 
   const getNameList = () => {
-    setNameList(createList(numOfNames, length))
+    setNameList(createList(numOfNames, length, startsWith))
     playDattebayo()
   }
 
@@ -62,6 +70,9 @@ function App() {
         </div>
       </div>
       <header className="header">
+        {/* <div className="counter-button" style={{ float: 'right'}} onClick={() => bgMusicPlaying(!musicPlaying)}>⚂</div> */}
+        <div className="counter-button" style={{ float: 'right' }} onClick={() => bgMusicPlaying(!musicPlaying)}>♫ {musicPlaying ? 'ON' : 'OFF'}</div>
+
         <h1>Baby Name Generator</h1>
         <div className="name-counter">
           <div className="counter-text">{`${numOfNames} names`}</div>
@@ -72,6 +83,10 @@ function App() {
           <div className="counter-text">{`${length} characters`}</div>
           <div className="counter-button" onClick={() => length - 1 >= 3 && setLength(length - 1)}>-1</div>
           <div className="counter-button" onClick={() => length + 1 < 11 && setLength(length + 1)}>+1</div>
+        </div>
+        <div className="name-counter">
+          <div className="counter-text">Starts with</div>
+          <input value={startsWith} onChange={(e) => e.target.value.length <= length && setStartsWith(e.target.value)} />
         </div>
 
         <button onClick={getNameList}>
