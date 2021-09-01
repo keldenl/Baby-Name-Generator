@@ -1,8 +1,9 @@
-import { defaultDb } from './db/defaultDb'
+import { defaultDb, japaneseDb, chineseDb } from './db'
 
-const defaultNameList = defaultDb.split('\n')
 const nameLists = {
-  default: defaultNameList,
+  default: defaultDb.split('\n'),
+  japanese: japaneseDb.split('\n'),
+  chinese: chineseDb.split('\n'),
 }
 
 const toProperCase = (str) => {
@@ -47,31 +48,33 @@ const hasMatchesMultiple = (str, arrRegex) => {
   return false
 }
 
-const createName = (length, startsWith, nameList, isConcat) => {
+const createName = (length, startsWith, nameList, isConcat, exactLength) => {
   let output = startsWith
+  let separatorCount = 0
 
-  while (output.length < length) {
+  while (output.length - separatorCount < length) {
     let name = getRandPart(output.length, length, nameList, isConcat)
-    let possibleName = output + name
+    let possibleName = output + (output.length > 0 && !isConcat ? '-' : '') + name
 
     // If there are 3 consecutive IDENTICAL or CONSONANTS characters...
     // try again until there isn't
-    while (hasMatchesMultiple(possibleName, [threeConsecutiveRegex, threeConsecutiveConsonants])) {
+    while (isConcat && hasMatchesMultiple(possibleName, [threeConsecutiveRegex, threeConsecutiveConsonants])) {
       name = getRandPart(output.length, length, nameList)
       possibleName = output + name
     }
     output = possibleName
+    !isConcat && separatorCount++
   }
 
-  return toProperCase(output.substring(0, length))
+  return toProperCase(exactLength ? output.substring(0, length) : output)
 }
 
-export const createList = (max = 25, length = 6, startWith = '', db = defaultDb, isConcat = true) => {
+export const createList = (max = 25, length = 6, startWith = '', db = defaultDb, isConcat = true, exactLength = true) => {
   let outputList = []
   const nameList = nameLists[db]
 
   for (let i = 0; i < max; i++) {
-    outputList.push(createName(length, startWith, nameList, isConcat))
+    outputList.push(createName(length, startWith, nameList, isConcat, exactLength))
   }
   return outputList
 }

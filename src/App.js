@@ -23,12 +23,13 @@ function App() {
   let [startsWith, setStartsWith] = useState('')
   const [db, setDb] = useState('default')
   const [isConcat, setIsConcat] = useState(true)
+  const [isExactLength, setIsExactLength] = useState(true)
 
   const [showClipboard, setShowClipboard] = useState(false)
   const [copyText, setCopyText] = useState('')
 
   const getNameList = () => {
-    setNameList(createList(numOfNames, length, startsWith, db, isConcat))
+    setNameList(createList(numOfNames, length, startsWith, db, isConcat, isExactLength))
     playDattebayo()
   }
 
@@ -51,6 +52,31 @@ function App() {
   const resetClipboard = () => {
     setCopyText('')
     toast.info(`Successfully reset clipboard!`, toastConfig)
+  }
+
+  // change isConcat to false/true depending on the db
+  const dbConfigs = {
+    default: {
+      name: 'Popular American Names',
+      isConcat: true,
+      exactLength: true
+    },
+    japanese: {
+      name: 'Japanese Syllables',
+      isConcat: false,
+      exactLength: false
+    },
+    chinese: {
+      name: 'Chinese Pinyin Syllables',
+      isConcat: false,
+      exactLength: false
+    },
+  }
+
+  const onDbChange = db => {
+    setIsConcat(dbConfigs[db].isConcat)
+    setIsExactLength(dbConfigs[db].isExactLength)
+    setDb(db)
   }
 
   return (
@@ -92,7 +118,7 @@ function App() {
             <div className="name-counter">
               <div className="counter-text">{`${length} characters`}</div>
               <div className="counter-button" onClick={() => length - 1 >= 3 && setLength(length - 1)}>-1</div>
-              <div className="counter-button" onClick={() => length + 1 < 11 && setLength(length + 1)}>+1</div>
+              <div className="counter-button" onClick={() => length + 1 < 20 && setLength(length + 1)}>+1</div>
             </div>
             <div className="name-counter">
               <div className="counter-text">Starts with: </div>
@@ -100,14 +126,19 @@ function App() {
             </div>
             <div className="name-counter">
               <div className="counter-text">Name Database: </div>
-              <select onChange={(e) => setDb(e.target.value)} value={db}>
-                <option value='default'>Popular Names 2020</option>
-                <option value='japanese'>Japanese Syllables</option>
+              <select onChange={(e) => onDbChange(e.target.value)} value={db}>
+                {Object.keys(dbConfigs).map(db =>
+                  <option value={db}>{dbConfigs[db].name}</option>
+                )}
               </select>
             </div>
             <div className="name-counter">
-              <div className="counter-text" title="Do you want to concatenate different parts of names together, or do you want to use whole names (i.e. japanese syllables would want this to be false).">Concat Names? </div>
-              <input type="checkbox" checked={isConcat} onChange={() => setIsConcat(!isConcat)} />
+              <div className="counter-text" title="Do you want to concatenate different parts of names together, or do you want to use whole names (i.e. japanese syllables would want this to be false).">Concating Names </div>
+              <input type="checkbox" checked={isConcat} readonly />
+            </div>
+            <div className="name-counter">
+              <div className="counter-text" title="Makes sense to not cut off names with mid syllable / chinese pinyin">Match requested length</div>
+              <input type="checkbox" checked={isExactLength} readonly />
             </div>
           </>
           : null}
