@@ -20,9 +20,9 @@ const getRandSub = () => randNum(2, 4)
 // random word from list
 const getRandWord = (nameList) => nameList[randNum(0, nameList.length)]
 
-const getRandPart = (startIdx, totalLength, nameList, isConcat) => {
+const getRandPart = (startIdx, totalLength, nameList, isSyllables) => {
   const word = getRandWord(nameList)
-  if (!isConcat) {
+  if (isSyllables) {
     return word
   }
 
@@ -48,33 +48,51 @@ const hasMatchesMultiple = (str, arrRegex) => {
   return false
 }
 
-const createName = (length, startsWith, nameList, isConcat, exactLength) => {
-  let output = startsWith
-  let separatorCount = 0
+const createName = (length, startsWith, nameList, isSyllables, exactLength) => {
+  if (isSyllables) {
+    return createSyllablesName(length, startsWith, nameList)
+  }
+  return createDefaultName(length, startsWith, nameList)
+}
 
-  while (output.length - separatorCount < length) {
-    let name = getRandPart(output.length, length, nameList, isConcat)
-    let possibleName = output + (output.length > 0 && !isConcat ? '-' : '') + name
+const createDefaultName = (length, startsWith, nameList) => {
+  let output = startsWith[0]
+
+  while (output.length < length) {
+    let name = getRandPart(output.length, length, nameList, false)
+    let possibleName = output + name
 
     // If there are 3 consecutive IDENTICAL or CONSONANTS characters...
     // try again until there isn't
-    while (isConcat && hasMatchesMultiple(possibleName, [threeConsecutiveRegex, threeConsecutiveConsonants])) {
+    while (hasMatchesMultiple(possibleName, [threeConsecutiveRegex, threeConsecutiveConsonants])) {
       name = getRandPart(output.length, length, nameList)
       possibleName = output + name
     }
     output = possibleName
-    !isConcat && separatorCount++
   }
 
-  return toProperCase(exactLength ? output.substring(0, length) : output)
+  return toProperCase(output.substring(0, length))
 }
 
-export const createList = (max = 25, length = 6, startWith = '', db = defaultDb, isConcat = true, exactLength = true) => {
+const createSyllablesName = (length, startsWith, nameList) => {
+  let output = new Array(length).fill('')
+  startsWith.map((s, i) => output[i] = s)
+
+  for (let i = 0; i < length; i++) {
+    if (output[i].length) continue
+    let name = getRandPart(output.length, length, nameList, true)
+    output[i] = name
+  }
+
+  return output.join('-')
+}
+
+export const createList = (max = 25, length = 6, startWith = [''], db = defaultDb, isSyllables = false, exactLength = true) => {
   let outputList = []
   const nameList = nameLists[db]
 
   for (let i = 0; i < max; i++) {
-    outputList.push(createName(length, startWith, nameList, isConcat, exactLength))
+    outputList.push(createName(length, startWith, nameList, isSyllables, exactLength))
   }
   return outputList
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,16 +20,17 @@ function App() {
   let [nameList, setNameList] = useState([])
   let [numOfNames, setNumOfNames] = useState(50)
   let [length, setLength] = useState(7)
-  let [startsWith, setStartsWith] = useState('')
+  let [startsWith, setStartsWith] = useState([''])
   const [db, setDb] = useState('default')
-  const [isConcat, setIsConcat] = useState(true)
+  const [isSyllables, setIsSyllables] = useState(false)
+  const [syllablesComponent, setSyllablesComponent] = useState([])
   const [isExactLength, setIsExactLength] = useState(true)
 
   const [showClipboard, setShowClipboard] = useState(false)
   const [copyText, setCopyText] = useState('')
 
   const getNameList = () => {
-    setNameList(createList(numOfNames, length, startsWith, db, isConcat, isExactLength))
+    setNameList(createList(numOfNames, length, startsWith, db, isSyllables, isExactLength))
     playDattebayo()
   }
 
@@ -58,26 +59,58 @@ function App() {
   const dbConfigs = {
     default: {
       name: 'Popular American Names',
-      isConcat: true,
+      isSyllables: false,
       exactLength: true
     },
     japanese: {
       name: 'Japanese Syllables',
-      isConcat: false,
+      isSyllables: true,
       exactLength: false
     },
     chinese: {
       name: 'Chinese Pinyin Syllables',
-      isConcat: false,
+      isSyllables: true,
       exactLength: false
     },
   }
 
   const onDbChange = db => {
-    setIsConcat(dbConfigs[db].isConcat)
-    setIsExactLength(dbConfigs[db].isExactLength)
+    setIsSyllables(dbConfigs[db].isSyllables)
+    // setIsExactLength(dbConfigs[db].isExactLength)
     setDb(db)
+    if (dbConfigs[db].isSyllables) {
+      setLength(3)
+    } else {
+      setLength(7)
+    }
   }
+
+  const onSyllablesComponentChange = (e, i) => {
+    console.log('starts with is ', startsWith)
+    const newArray = [...startsWith]
+    newArray[i] = e.target.value
+    setStartsWith(newArray)
+  }
+
+  useEffect(() => {
+    if (isSyllables) {
+      const newStartsWith = new Array(length).fill('')
+      startsWith.map((start, i) => newStartsWith[i] = start)
+      setStartsWith(newStartsWith)
+    } else {
+      setStartsWith(startsWith[0] || [''])
+    }
+  }, [length, isSyllables])
+
+  useEffect(() => {
+    const newComponent = []
+    for (let i = 0; i < length; i++) {
+      newComponent.push(
+        <input value={startsWith[i]} onChange={(e) => onSyllablesComponentChange(e, i)} />
+      )
+    }
+    setSyllablesComponent(newComponent)
+  }, [length, startsWith])
 
   return (
     <div className="App">
@@ -116,13 +149,24 @@ function App() {
               <div className="counter-button" onClick={() => setNumOfNames(numOfNames + 10)}>+10</div>
             </div>
             <div className="name-counter">
-              <div className="counter-text">{`${length} characters`}</div>
-              <div className="counter-button" onClick={() => length - 1 >= 3 && setLength(length - 1)}>-1</div>
+              <div className="counter-text">{`${length} ${isSyllables ? 'syllables' : 'characters'}`}</div>
+              <div className="counter-button" onClick={() => length - 1 > 0 && setLength(length - 1)
+              }>-1</div>
               <div className="counter-button" onClick={() => length + 1 < 20 && setLength(length + 1)}>+1</div>
             </div>
             <div className="name-counter">
-              <div className="counter-text">Starts with: </div>
-              <input value={startsWith} onChange={(e) => e.target.value.length <= length && setStartsWith(e.target.value)} />
+              {isSyllables ?
+                <>
+                  <div className="counter-text">Pre-populate name: </div>
+                  {syllablesComponent}
+                </>
+                :
+                <>
+                  <div className="counter-text">Starts with: </div>
+                  <input value={startsWith[0]} onChange={(e) => e.target.value.length <= length && setStartsWith([e.target.value])} />
+                </>
+              }
+
             </div>
             <div className="name-counter">
               <div className="counter-text">Name Database: </div>
@@ -132,12 +176,12 @@ function App() {
                 )}
               </select>
             </div>
+            {/* <div className="name-counter">
+              <div className="counter-text" title="Do you want to concatenate different parts of names together, or do you want to use whole names (i.e. japanese syllables would want this to be false).">Syllables Mode </div>
+              <input type="checkbox" checked={isSyllables} readonly />
+            </div> */}
             <div className="name-counter">
-              <div className="counter-text" title="Do you want to concatenate different parts of names together, or do you want to use whole names (i.e. japanese syllables would want this to be false).">Concating Names </div>
-              <input type="checkbox" checked={isConcat} readonly />
-            </div>
-            <div className="name-counter">
-              <div className="counter-text" title="Makes sense to not cut off names with mid syllable / chinese pinyin">Match requested length</div>
+              <div className="counter-text" title="Makes sense to not cut off names with mid syllable / chinese pinyin">Match requested length?</div>
               <input type="checkbox" checked={isExactLength} readonly />
             </div>
           </>

@@ -1,5 +1,4 @@
-export const japaneseDb = `
-a
+export const japaneseDb = `a
 i
 u
 e
@@ -44,7 +43,6 @@ ru
 re
 ro
 wa
-wo
-`
+wo`
 
 export default japaneseDb
