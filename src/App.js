@@ -24,13 +24,12 @@ function App() {
   const [db, setDb] = useState('default')
   const [isSyllables, setIsSyllables] = useState(false)
   const [syllablesComponent, setSyllablesComponent] = useState([])
-  const [isExactLength, setIsExactLength] = useState(true)
 
   const [showClipboard, setShowClipboard] = useState(false)
   const [copyText, setCopyText] = useState('')
 
   const getNameList = () => {
-    setNameList(createList(numOfNames, length, startsWith, db, isSyllables, isExactLength))
+    setNameList(createList(numOfNames, length, startsWith, db, isSyllables))
     playDattebayo()
   }
 
@@ -72,24 +71,30 @@ function App() {
       isSyllables: true,
       exactLength: false
     },
+    english: {
+      name: 'English Pre-defined Syllables',
+      isSyllables: true,
+      exactLength: false
+    },
   }
 
   const onDbChange = db => {
     setIsSyllables(dbConfigs[db].isSyllables)
-    // setIsExactLength(dbConfigs[db].isExactLength)
     setDb(db)
     if (dbConfigs[db].isSyllables) {
       setLength(3)
     } else {
       setLength(7)
+      setStartsWith([startsWith.join(' ')])
     }
   }
 
   const onSyllablesComponentChange = (e, i) => {
-    console.log('starts with is ', startsWith)
-    const newArray = [...startsWith]
-    newArray[i] = e.target.value
-    setStartsWith(newArray)
+    if (isSyllables) {
+      const newArray = [...startsWith]
+      newArray[i] = e.target.value
+      setStartsWith(newArray)
+    }
   }
 
   useEffect(() => {
@@ -97,8 +102,6 @@ function App() {
       const newStartsWith = new Array(length).fill('')
       startsWith.map((start, i) => newStartsWith[i] = start)
       setStartsWith(newStartsWith)
-    } else {
-      setStartsWith(startsWith[0] || [''])
     }
   }, [length, isSyllables])
 
@@ -132,13 +135,32 @@ function App() {
         </div>
       </div>
       <header className="header">
-        {/* <div className="counter-button" style={{ float: 'right'}} onClick={() => bgMusicPlaying(!musicPlaying)}>⚂</div> */}
         <div className="counter-button" style={{ float: 'right' }} onClick={() => bgMusicPlaying(!musicPlaying)}>♫ {musicPlaying ? 'ON' : 'OFF'}</div>
-
         <h1>Baby Name Generator</h1>
+        <div className="name-counter">
+          <div className="counter-text">Name Database: </div>
+          <select onChange={(e) => onDbChange(e.target.value)} value={db}>
+            {Object.keys(dbConfigs).map(db =>
+              <option value={db}>{dbConfigs[db].name}</option>
+            )}
+          </select>
+        </div>
+        <div className="name-counter">
+          {isSyllables ?
+            <>
+              <div className="counter-text">Lock Syllables: </div>
+              {syllablesComponent}
+            </>
+            :
+            <>
+              <div className="counter-text">Starts with: </div>
+              <input value={startsWith[0]} onChange={(e) => e.target.value.length <= length && setStartsWith([e.target.value])} />
+            </>
+          }
+        </div>
         <div>
           <div className="counter-button" style={{ display: 'inline-block' }} onClick={() => setShowSettings(!showSettings)}>
-            {showSettings ? 'Hide Advanced Options' : 'Show Advanced Options'}
+            {showSettings ? 'Hide Additional Options' : 'Show Additional Options'}
           </div>
         </div>
         {showSettings ?
@@ -153,36 +175,6 @@ function App() {
               <div className="counter-button" onClick={() => length - 1 > 0 && setLength(length - 1)
               }>-1</div>
               <div className="counter-button" onClick={() => length + 1 < 20 && setLength(length + 1)}>+1</div>
-            </div>
-            <div className="name-counter">
-              {isSyllables ?
-                <>
-                  <div className="counter-text">Pre-populate name: </div>
-                  {syllablesComponent}
-                </>
-                :
-                <>
-                  <div className="counter-text">Starts with: </div>
-                  <input value={startsWith[0]} onChange={(e) => e.target.value.length <= length && setStartsWith([e.target.value])} />
-                </>
-              }
-
-            </div>
-            <div className="name-counter">
-              <div className="counter-text">Name Database: </div>
-              <select onChange={(e) => onDbChange(e.target.value)} value={db}>
-                {Object.keys(dbConfigs).map(db =>
-                  <option value={db}>{dbConfigs[db].name}</option>
-                )}
-              </select>
-            </div>
-            {/* <div className="name-counter">
-              <div className="counter-text" title="Do you want to concatenate different parts of names together, or do you want to use whole names (i.e. japanese syllables would want this to be false).">Syllables Mode </div>
-              <input type="checkbox" checked={isSyllables} readonly />
-            </div> */}
-            <div className="name-counter">
-              <div className="counter-text" title="Makes sense to not cut off names with mid syllable / chinese pinyin">Match requested length?</div>
-              <input type="checkbox" checked={isExactLength} readonly />
             </div>
           </>
           : null}
