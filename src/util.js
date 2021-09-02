@@ -1,9 +1,10 @@
-import { defaultDb, japaneseDb, chineseDb } from './db'
+import { defaultDb, japaneseDb, chineseDb, englishDb } from './db'
 
 const nameLists = {
   default: defaultDb.split('\n'),
   japanese: japaneseDb.split('\n'),
   chinese: chineseDb.split('\n'),
+  english: englishDb.split('\n'),
 }
 
 const toProperCase = (str) => {
@@ -48,7 +49,7 @@ const hasMatchesMultiple = (str, arrRegex) => {
   return false
 }
 
-const createName = (length, startsWith, nameList, isSyllables, exactLength) => {
+const createName = (length, startsWith, nameList, isSyllables) => {
   if (isSyllables) {
     return createSyllablesName(length, startsWith, nameList)
   }
@@ -84,15 +85,15 @@ const createSyllablesName = (length, startsWith, nameList) => {
     output[i] = name
   }
 
-  return output.join('-')
+  return output.join(' ')
 }
 
-export const createList = (max = 25, length = 6, startWith = [''], db = defaultDb, isSyllables = false, exactLength = true) => {
+export const createList = (max = 25, length = 6, startWith = [''], db = defaultDb, isSyllables = false) => {
   let outputList = []
   const nameList = nameLists[db]
 
   for (let i = 0; i < max; i++) {
-    outputList.push(createName(length, startWith, nameList, isSyllables, exactLength))
+    outputList.push(createName(length, startWith, nameList, isSyllables))
   }
   return outputList
 }
